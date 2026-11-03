@@ -1,0 +1,642 @@
+[
+  {
+    "index": 0,
+    "category": "",
+    "field": "No"
+  },
+  {
+    "index": 1,
+    "category": "",
+    "field": "Provinsi"
+  },
+  {
+    "index": 2,
+    "category": "",
+    "field": "Kabupaten / Kota"
+  },
+  {
+    "index": 3,
+    "category": "Profil Wilayah",
+    "field": "Nama Walikota/Bupati"
+  },
+  {
+    "index": 4,
+    "category": "Profil Wilayah",
+    "field": "Nama Wakil"
+  },
+  {
+    "index": 5,
+    "category": "Profil Wilayah",
+    "field": "Jumlah Penduduk"
+  },
+  {
+    "index": 6,
+    "category": "Profil Wilayah",
+    "field": "Jumlah Keluarga"
+  },
+  {
+    "index": 7,
+    "category": "Profil Wilayah",
+    "field": "Penduduk / Keluarga"
+  },
+  {
+    "index": 8,
+    "category": "Profil Wilayah",
+    "field": "Kepadatan Penduduk"
+  },
+  {
+    "index": 9,
+    "category": "Profil Wilayah",
+    "field": "Luas Wilayah (Km)"
+  },
+  {
+    "index": 10,
+    "category": "Topografi Mayoritas",
+    "field": "Dataran"
+  },
+  {
+    "index": 11,
+    "category": "Topografi Mayoritas",
+    "field": "Lembah"
+  },
+  {
+    "index": 12,
+    "category": "Topografi Mayoritas",
+    "field": "Lereng"
+  },
+  {
+    "index": 13,
+    "category": "Topografi Mayoritas",
+    "field": "Puncak/Tebing"
+  },
+  {
+    "index": 14,
+    "category": "Topografi Mayoritas",
+    "field": "Total Desa"
+  },
+  {
+    "index": 15,
+    "category": "Batas Wilayah",
+    "field": "Utara"
+  },
+  {
+    "index": 16,
+    "category": "Batas Wilayah",
+    "field": "Selatan"
+  },
+  {
+    "index": 17,
+    "category": "Batas Wilayah",
+    "field": "Timur"
+  },
+  {
+    "index": 18,
+    "category": "Batas Wilayah",
+    "field": "Barat"
+  },
+  {
+    "index": 19,
+    "category": "Batas Wilayah",
+    "field": "Elevasi"
+  },
+  {
+    "index": 20,
+    "category": "Batas Wilayah",
+    "field": "Curah hujan"
+  },
+  {
+    "index": 21,
+    "category": "Pemerintahan",
+    "field": "Kecamatan"
+  },
+  {
+    "index": 22,
+    "category": "Pemerintahan",
+    "field": "Desa / Kelurahan"
+  },
+  {
+    "index": 23,
+    "category": "Pemerintahan",
+    "field": "RW dan Setingkatnya"
+  },
+  {
+    "index": 24,
+    "category": "Pemerintahan",
+    "field": "RT dan Setingkatnya"
+  },
+  {
+    "index": 25,
+    "category": "Pemilu 2024",
+    "field": "Partai Demokrat"
+  },
+  {
+    "index": 26,
+    "category": "DPRD",
+    "field": "Perjuangan (PDIP)"
+  },
+  {
+    "index": 27,
+    "category": "DPRD",
+    "field": "Partai Golongan Karya (GOLKAR)"
+  },
+  {
+    "index": 28,
+    "category": "DPRD",
+    "field": "Partai Keadilan Sejahtera (PKS)"
+  },
+  {
+    "index": 29,
+    "category": "DPRD",
+    "field": "Partai Persatuan Pembangunan (PPP) dan Amanat Nasional (PAN)"
+  },
+  {
+    "index": 30,
+    "category": "DPRD",
+    "field": "Partai Hati Nurani Rakyat (HANURA)"
+  },
+  {
+    "index": 31,
+    "category": "DPRD",
+    "field": "Partai Kebangkitan Bangsa (PKB)"
+  },
+  {
+    "index": 32,
+    "category": "DPRD",
+    "field": "Partai Nasional Demokrat"
+  },
+  {
+    "index": 33,
+    "category": "DPRD",
+    "field": "Partai Bulan Bintang (PBB)"
+  },
+  {
+    "index": 34,
+    "category": "DPRD",
+    "field": "Partai Gerakan Indonesia Raya (Gerindra)"
+  },
+  {
+    "index": 35,
+    "category": "Pendapatan Daerah",
+    "field": "Jumlah Pendapatan / Total of Revenues"
+  },
+  {
+    "index": 36,
+    "category": "Pendapatan Daerah",
+    "field": "1. Pendapatan Asli Daerah (PAD) / Regional Revenue"
+  },
+  {
+    "index": 37,
+    "category": "Pendapatan Daerah",
+    "field": "1.1 Pajak Daerah / Regional Tax"
+  },
+  {
+    "index": 38,
+    "category": "Pendapatan Daerah",
+    "field": "1.2 Retribusi Daerah / Regional Retribution"
+  },
+  {
+    "index": 39,
+    "category": "Pendapatan Daerah",
+    "field": "1.3 Hasil Perusahaan Milik Daerah dan Pengelolaan Kekayaan Daerah yang Dipisahkan / Regional-Owned Company Revenue and Separated Management of Regional Wealth"
+  },
+  {
+    "index": 40,
+    "category": "Pendapatan Daerah",
+    "field": "1.4 Lain-lain PAD yang Sah / Other Regional Revenue"
+  },
+  {
+    "index": 41,
+    "category": "Pendapatan Daerah",
+    "field": "2. Pendapatan Transfer / Transfer Revenue"
+  },
+  {
+    "index": 42,
+    "category": "Pendapatan Daerah",
+    "field": "2.1 Bagi Hasil Pajak / Tax Sharing Revenue"
+  },
+  {
+    "index": 43,
+    "category": "Pendapatan Daerah",
+    "field": "2.2 Bagi Hasil Bukan Pajak/Sumber Daya Alam / Non-Tax Sharing Revenue/Natural Resources"
+  },
+  {
+    "index": 44,
+    "category": "Pendapatan Daerah",
+    "field": "2.3 Dana Alokasi Umum / General Allocation Fund"
+  },
+  {
+    "index": 45,
+    "category": "Pendapatan Daerah",
+    "field": "2.4 Dana Alokasi Khusus / Special Allocation Fund"
+  },
+  {
+    "index": 46,
+    "category": "Pendapatan Daerah",
+    "field": "2.5 Dana Insentif Daerah"
+  },
+  {
+    "index": 47,
+    "category": "Pendapatan Daerah",
+    "field": "2.6 Dana Penyesuaian dan Otonomi Daerah / Regional Adjustment and Autonomy Fund"
+  },
+  {
+    "index": 48,
+    "category": "Pendapatan Daerah",
+    "field": "2.7 Insentif Fiskal"
+  },
+  {
+    "index": 49,
+    "category": "Pendapatan Daerah",
+    "field": "2.8 Dana Desa / Village Fund"
+  },
+  {
+    "index": 50,
+    "category": "Pendapatan Daerah",
+    "field": "2.9 Dana Bagi Hasil Pajak dari Provinsi dan Pemerintah Daerah Lainnya / Tax Sharing Revenue from Provincial and Other Regional Governments"
+  },
+  {
+    "index": 51,
+    "category": "Pendapatan Daerah",
+    "field": "2.10 Bantuan Keuangan dari Provinsi atau Pemerintah Daerah Lainnya / Financial Assistance from Provincial or Other Regional Governments"
+  },
+  {
+    "index": 52,
+    "category": "Pendapatan Daerah",
+    "field": "3. Lain-lain Pendapatan yang Sah / Other Revenue"
+  },
+  {
+    "index": 53,
+    "category": "Pendapatan Daerah",
+    "field": "3.1 Pendapatan Hibah / Grant"
+  },
+  {
+    "index": 54,
+    "category": "Pendapatan Daerah",
+    "field": "3.2 Dana Darurat / Emergency Fund"
+  },
+  {
+    "index": 55,
+    "category": "Pendapatan Daerah",
+    "field": "3.6 Lainnya / Others"
+  },
+  {
+    "index": 56,
+    "category": "Belanja Daerah",
+    "field": "1. Belanja Operasi / Operational Expenditures"
+  },
+  {
+    "index": 57,
+    "category": "Belanja Daerah",
+    "field": "1.1 Belanja Pegawai / Personnel Expenditures"
+  },
+  {
+    "index": 58,
+    "category": "Belanja Daerah",
+    "field": "1.2 Belanja Barang dan Jasa / Goods and Services Expenditures"
+  },
+  {
+    "index": 59,
+    "category": "Belanja Daerah",
+    "field": "1.3 Belanja Bunga / Interest Expenditures"
+  },
+  {
+    "index": 60,
+    "category": "Belanja Daerah",
+    "field": "1.4 Belanja Subsidi / Subsidies Expenditures"
+  },
+  {
+    "index": 61,
+    "category": "Belanja Daerah",
+    "field": "1.5 Belanja Hibah / Grant Expenditures"
+  },
+  {
+    "index": 62,
+    "category": "Belanja Daerah",
+    "field": "1.6 Belanja Bantuan Sosial / Social Aid Expenditures"
+  },
+  {
+    "index": 63,
+    "category": "Belanja Daerah",
+    "field": "2. Belanja Modal / Capital Expenditures"
+  },
+  {
+    "index": 64,
+    "category": "Belanja Daerah",
+    "field": "3. Belanja Tidak Terduga / Unpredicted Expenditures"
+  },
+  {
+    "index": 65,
+    "category": "Belanja Daerah",
+    "field": "4. Belanja Transfer, Bantuan Keuangan, dan Bagi Hasil"
+  },
+  {
+    "index": 66,
+    "category": "Belanja Daerah",
+    "field": "4.1 Belanja Bagi Hasil / Sharing Fund Expenditures"
+  },
+  {
+    "index": 67,
+    "category": "Belanja Daerah",
+    "field": "4.2 Belanja Bantuan Keuangan / Financial Aids Expenditures"
+  },
+  {
+    "index": 68,
+    "category": "Pendudukan / SDM",
+    "field": "Total"
+  },
+  {
+    "index": 69,
+    "category": "Penduduk per Jenis Kelamin",
+    "field": "Laki-Laki"
+  },
+  {
+    "index": 70,
+    "category": "Penduduk per Jenis Kelamin",
+    "field": "Wanita"
+  },
+  {
+    "index": 71,
+    "category": "Penduduk per Kelompok Umur",
+    "field": "Total"
+  },
+  {
+    "index": 72,
+    "category": "Penduduk per Kelompok Umur",
+    "field": "0–4"
+  },
+  {
+    "index": 73,
+    "category": "Penduduk per Kelompok Umur",
+    "field": "5–9"
+  },
+  {
+    "index": 74,
+    "category": "Penduduk per Kelompok Umur",
+    "field": "10–14"
+  },
+  {
+    "index": 75,
+    "category": "Penduduk per Kelompok Umur",
+    "field": "15–19"
+  },
+  {
+    "index": 76,
+    "category": "Penduduk per Kelompok Umur",
+    "field": "20–24"
+  },
+  {
+    "index": 77,
+    "category": "Penduduk per Kelompok Umur",
+    "field": "25–29"
+  },
+  {
+    "index": 78,
+    "category": "Penduduk per Kelompok Umur",
+    "field": "30–34"
+  },
+  {
+    "index": 79,
+    "category": "Penduduk per Kelompok Umur",
+    "field": "35–39"
+  },
+  {
+    "index": 80,
+    "category": "Penduduk per Kelompok Umur",
+    "field": "40–44"
+  },
+  {
+    "index": 81,
+    "category": "Penduduk per Kelompok Umur",
+    "field": "45–49"
+  },
+  {
+    "index": 82,
+    "category": "Penduduk per Kelompok Umur",
+    "field": "50–54"
+  },
+  {
+    "index": 83,
+    "category": "Penduduk per Kelompok Umur",
+    "field": "55–59"
+  },
+  {
+    "index": 84,
+    "category": "Penduduk per Kelompok Umur",
+    "field": "60–64"
+  },
+  {
+    "index": 85,
+    "category": "Penduduk per Kelompok Umur",
+    "field": "65–69"
+  },
+  {
+    "index": 86,
+    "category": "Penduduk per Kelompok Umur",
+    "field": "70–74"
+  },
+  {
+    "index": 87,
+    "category": "Penduduk per Kelompok Umur",
+    "field": "75+"
+  },
+  {
+    "index": 88,
+    "category": "Profil Angkatan Kerja",
+    "field": "I. Angkatan Kerja / Labour Force"
+  },
+  {
+    "index": 89,
+    "category": "Profil Angkatan Kerja",
+    "field": "Bekerja / Working"
+  },
+  {
+    "index": 90,
+    "category": "Profil Angkatan Kerja",
+    "field": "Pengangguran Terbuka / Unemployment"
+  },
+  {
+    "index": 91,
+    "category": "Profil Angkatan Kerja",
+    "field": "II. Bukan Angkatan Kerja / Not in Labour Force"
+  },
+  {
+    "index": 92,
+    "category": "Profil Angkatan Kerja",
+    "field": "Sekolah / Attending School"
+  },
+  {
+    "index": 93,
+    "category": "Profil Angkatan Kerja",
+    "field": "Mengurus Rumah Tangga / Housekeeping"
+  },
+  {
+    "index": 94,
+    "category": "Profil Angkatan Kerja",
+    "field": "Lainnya / Others Activities"
+  },
+  {
+    "index": 95,
+    "category": "Angka IPM",
+    "field": "Total"
+  },
+  {
+    "index": 96,
+    "category": "Angka IPM",
+    "field": "Laki-Laki"
+  },
+  {
+    "index": 97,
+    "category": "Angka IPM",
+    "field": "Wanita"
+  },
+  {
+    "index": 98,
+    "category": "Ekonomi",
+    "field": "PDRB per Kapita"
+  },
+  {
+    "index": 99,
+    "category": "Ekonomi",
+    "field": "Pertumbuhan Ekonomi"
+  },
+  {
+    "index": 100,
+    "category": "Ekonomi",
+    "field": "Realisasi investasi (Jutaan Rp)"
+  },
+  {
+    "index": 101,
+    "category": "Ekonomi",
+    "field": "UMK"
+  },
+  {
+    "index": 102,
+    "category": "Jumlah Penduduk Miskin",
+    "field": "Total"
+  },
+  {
+    "index": 103,
+    "category": "Jumlah Penduduk Miskin",
+    "field": "Desil 1"
+  },
+  {
+    "index": 104,
+    "category": "Jumlah Penduduk Miskin",
+    "field": "Desil 2"
+  },
+  {
+    "index": 105,
+    "category": "Jumlah Penduduk Miskin",
+    "field": "Nilai Gini Ratio"
+  },
+  {
+    "index": 106,
+    "category": "Jumlah Penduduk Miskin",
+    "field": "Garis Kemiskinan (rupiah/kapita/bulan)"
+  },
+  {
+    "index": 107,
+    "category": "Jumlah Penduduk Miskin",
+    "field": "Jumlah Penduduk Miskin (ribu)"
+  },
+  {
+    "index": 108,
+    "category": "Jumlah Penduduk Miskin",
+    "field": "Persentase Penduduk Miskin"
+  },
+  {
+    "index": 109,
+    "category": "PDRB per Industri",
+    "field": "Produk Domestik Regional Bruto (Jutaan)"
+  },
+  {
+    "index": 110,
+    "category": "PDRB per Industri",
+    "field": ""
+  },
+  {
+    "index": 111,
+    "category": "Harga Berlaku",
+    "field": "A. Pertanian, Kehutanan, dan Perikanan"
+  },
+  {
+    "index": 112,
+    "category": "Harga Berlaku",
+    "field": "B. Pertambangan dan Penggalian"
+  },
+  {
+    "index": 113,
+    "category": "Harga Berlaku",
+    "field": "C. Industri Pengolahan"
+  },
+  {
+    "index": 114,
+    "category": "Harga Berlaku",
+    "field": "D. Pengadaan Listrik dan Gas"
+  },
+  {
+    "index": 115,
+    "category": "Harga Berlaku",
+    "field": "E. Pengadaan Air, Pengelolaan Sampah, Limbah dan Daur Ulang"
+  },
+  {
+    "index": 116,
+    "category": "Harga Berlaku",
+    "field": "F. Konstruksi"
+  },
+  {
+    "index": 117,
+    "category": "Harga Berlaku",
+    "field": "G. Perdagangan Besar dan Eceran; Reparasi Mobil dan Sepeda Motor"
+  },
+  {
+    "index": 118,
+    "category": "Harga Berlaku",
+    "field": "H. Transportasi dan Pergudangan"
+  },
+  {
+    "index": 119,
+    "category": "Harga Berlaku",
+    "field": "I. Penyediaan Akomodasi dan Makan Minum"
+  },
+  {
+    "index": 120,
+    "category": "Harga Berlaku",
+    "field": "J. Informasi dan Komunikasi"
+  },
+  {
+    "index": 121,
+    "category": "Harga Berlaku",
+    "field": "K. Jasa Keuangan dan Asuransi"
+  },
+  {
+    "index": 122,
+    "category": "Harga Berlaku",
+    "field": "L. Real Estate"
+  },
+  {
+    "index": 123,
+    "category": "Harga Berlaku",
+    "field": "M,N. Jasa Perusahaan"
+  },
+  {
+    "index": 124,
+    "category": "Harga Berlaku",
+    "field": "O. Administrasi Pemerintahan, Pertahanan dan Jaminan Sosial Wajib"
+  },
+  {
+    "index": 125,
+    "category": "Harga Berlaku",
+    "field": "P. Jasa Pendidikan"
+  },
+  {
+    "index": 126,
+    "category": "Harga Berlaku",
+    "field": "Q. Jasa Kesehatan dan Kegiatan Sosial"
+  },
+  {
+    "index": 127,
+    "category": "Harga Berlaku",
+    "field": "R,S,T,U. Jasa lainnya"
+  }
+]

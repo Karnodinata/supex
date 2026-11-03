@@ -1,0 +1,25 @@
+# Virtual Environment
+venv/
+.venv/
+env/
+
+# Python Cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Temporary & Output Files
+output_kabupaten/
+tes dulu/
+uploads/
+*.tmp
+*.xlsx
+sample_test.pdf
+
+# Binaries & Dependencies
+node_modules/
+cloudflared.exe
+
+# IDE Settings
+.vscode/
+.idea/

@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BPS Data Parser & Visualizer</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <header class="top-nav">
+    <div class="brand">
+      <span class="brand-badge">BPS PARSER</span>
+      <div>
+        <h1 class="brand-title">Data Parser & Visualizer</h1>
+        <p class="brand-subtitle">Ekstraksi Publikasi Daerah Dalam Angka ke Excel Terstandarisasi</p>
+      </div>
+    </div>
+    <div class="nav-links">
+      <a href="https://docs.google.com/spreadsheets/d/1FZHbw0gBHbIV80jFdDb_LcAzcUDIGDINoBlwDOOxOe8/edit?gid=975201531#gid=975201531" target="_blank" rel="noopener noreferrer" class="nav-link">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+        Template Spreadsheet BPS (128 Kolom)
+      </a>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- Workflow Stepper -->
+    <nav class="workflow-stepper" aria-label="Alur Sistem">
+      <div class="step-card active" id="step-card-1">
+        <div class="step-num">1</div>
+        <div class="step-info">
+          <div class="step-title">Upload PDF</div>
+          <div class="step-desc">Unggah publikasi BPS</div>
+        </div>
+      </div>
+      <div class="step-card" id="step-card-2">
+        <div class="step-num">2</div>
+        <div class="step-info">
+          <div class="step-title">Pilih Tabel & Variabel</div>
+          <div class="step-desc">Pindai & seleksi data</div>
+        </div>
+      </div>
+      <div class="step-card" id="step-card-3">
+        <div class="step-num">3</div>
+        <div class="step-info">
+          <div class="step-title">Preview Struktur</div>
+          <div class="step-desc">Pratinjau data tabular</div>
+        </div>
+      </div>
+      <div class="step-card" id="step-card-4">
+        <div class="step-num">4</div>
+        <div class="step-info">
+          <div class="step-title">Export Excel</div>
+          <div class="step-desc">Unduh berkas .xlsx</div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Global Notification Banner -->
+    <div id="alert-container" style="display: none;"></div>
+
+    <!-- Step 1: Upload PDF -->
+    <section class="card" id="upload-section">
+      <div class="card-header">
+        <h2 class="card-title">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+          1. Upload PDF Publikasi BPS
+        </h2>
+        <span class="card-badge">Mendukung format PDF Kabupaten / Kecamatan Dalam Angka</span>
+      </div>
+
+      <div class="upload-dropzone" id="dropzone">
+        <svg class="upload-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="12" y2="12"/><line x1="15" y1="15" x2="12" y2="12"/></svg>
+        <div class="upload-prompt" id="dropzone-text">Seret & lepas file PDF ke sini, atau klik untuk memilih file</div>
+        <div class="upload-hint">Contoh: "Kecamatan Arongan Lambalek Dalam Angka 2019.pdf" atau file kabupaten lainnya</div>
+        <input type="file" id="pdf-file-input" class="hidden-input" accept=".pdf">
+      </div>
+
+      <!-- Metadata Banner (Hidden initially) -->
+      <div class="meta-grid" id="meta-banner" style="display: none;">
+        <div class="meta-item">
+          <span class="meta-label">Nama Berkas</span>
+          <span class="meta-value" id="meta-filename">-</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Daerah / Wilayah</span>
+          <span class="meta-value" id="meta-daerah">-</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Tahun Data</span>
+          <span class="meta-value" id="meta-year">-</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Total Halaman</span>
+          <span class="meta-value" id="meta-pages">-</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Tabel Terdeteksi</span>
+          <span class="meta-value" id="meta-tables-count">-</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Step 2: Table & Variable Selector -->
+    <section class="card" id="selection-section" style="display: none;">
+      <div class="card-header">
+        <h2 class="card-title">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg>
+          2. Baca List Table & Pilih Export Variable
+        </h2>
+        <div class="selection-actions">
+          <button type="button" class="btn-secondary" id="btn-select-all">Pilih Semua</button>
+          <button type="button" class="btn-secondary" id="btn-deselect-all">Batal Pilih</button>
+        </div>
+      </div>
+
+      <!-- Filters & Search -->
+      <div class="filter-bar">
+        <div class="search-box">
+          <input type="text" id="search-tables-input" class="input-text" placeholder="Cari nama tabel, nomor, atau variabel (e.g., penduduk, luas, dprd)...">
+        </div>
+        <div class="sector-chips" id="sector-chips-container">
+          <button type="button" class="chip-btn active" data-sector="ALL">Semua Sektor</button>
+          <button type="button" class="chip-btn" data-sector="1_Geografi_Iklim">1. Geografi</button>
+          <button type="button" class="chip-btn" data-sector="2_Pemerintahan">2. Pemerintahan</button>
+          <button type="button" class="chip-btn" data-sector="3_Penduduk">3. Penduduk</button>
+          <button type="button" class="chip-btn" data-sector="4_Sosial">4. Sosial</button>
+          <button type="button" class="chip-btn" data-sector="5_Pertanian">5. Pertanian</button>
+          <button type="button" class="chip-btn" data-sector="6_Energi_Perdagangan">6. Energi & Dagang</button>
+          <button type="button" class="chip-btn" data-sector="7_Transportasi_Lainnya">7. Transportasi</button>
+        </div>
+      </div>
+
+      <!-- Table Listing -->
+      <div class="table-list-container">
+        <div class="table-row-item table-row-header">
+          <span><input type="checkbox" id="check-all-header" title="Centang Semua"></span>
+          <span>No. Tabel</span>
+          <span>Judul Tabel Statistik</span>
+          <span>Sektor BPS</span>
+          <span>Hal.</span>
+          <span>Aksi</span>
+        </div>
+        <div id="table-rows-list">
+          <!-- Dynamically populated -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Step 3: Structure & Data Preview -->
+    <section class="card" id="preview-section" style="display: none;">
+      <div class="card-header">
+        <h2 class="card-title">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
+          3. Struktur Table Hasil Export (Preview)
+        </h2>
+        <span class="card-badge" id="preview-meta-info">Pilih tabel di atas untuk pratinjau data</span>
+      </div>
+
+      <div class="preview-controls">
+        <div class="preview-tabs" id="preview-tabs-container">
+          <!-- Tabs dynamically generated for selected tables -->
+        </div>
+      </div>
+
+      <!-- Data Table Display -->
+      <div class="data-table-wrapper" id="preview-table-container">
+        <div class="empty-state">Belum ada tabel yang dimuat untuk pratinjau. Klik tombol "Lihat Preview" pada tabel yang diinginkan.</div>
+      </div>
+    </section>
+
+    <!-- Step 4: Export to Excel -->
+    <section class="card" id="export-section" style="display: none;">
+      <div class="card-header">
+        <h2 class="card-title">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          4. Export Hasil ke Excel (.xlsx)
+        </h2>
+        <span class="card-badge" id="export-selected-badge">0 Tabel Dipilih</span>
+      </div>
+
+      <div class="export-panel">
+        <div class="export-filename-group">
+          <label for="export-filename-input">Format Nama File Output (Sesuai Alur: tahun berapa, daerah mana, variable yang ketarik):</label>
+          <input type="text" id="export-filename-input" class="input-text" placeholder="2024_Daerah_Variabel.xlsx">
+        </div>
+        <button type="button" class="btn-primary" id="btn-export-excel">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          <span id="btn-export-text">Export ke Excel (.xlsx)</span>
+        </button>
+      </div>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
+
