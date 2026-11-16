@@ -10,4 +10,3 @@ test_files = [f for f in files if "tes dulu" in getattr(f, "path", "").lower() o
 print(f"Found {len(test_files)} files in test folder:")
 for f in test_files:
     print(f"Path: {f.path} | ID: {f.id}")
-X

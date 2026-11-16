@@ -14,15 +14,11 @@ import openpyxl
 from openpyxl.styles import Font, PatternFill, Alignment, Border, Side
 from openpyxl.utils import get_column_letter
 
-# Pastikan UTF-8 encoding untuk terminal Windows
 if sys.stdout and hasattr(sys.stdout, 'reconfigure'):
     try:
         sys.stdout.reconfigure(encoding='utf-8', errors='replace')
     except Exception:
-
-# ==============================================================================
-# 1. STRUKTUR DATA STATISTIK
-# ==============================================================================
+        pass
 @dataclass
 class StatTable:
     table_id: str
@@ -46,16 +42,12 @@ class DocumentStatsResult:
     total_pages: int
     tables: List[StatTable]
 
-
-# ==============================================================================
-# 2. STATE & PROGRESS TRACKER (PER-FILE REAL-TIME TRACKING)
-# ==============================================================================
 class ProgressTracker:
     def __init__(self, tracker_file: str = "progress_tracker.json"):
         self.tracker_file = tracker_file
         self.state = {
-            "completed_files": {},      # file_id -> timestamp
-            "completed_kabupatens": [], # list of kab keys
+            "completed_files": {},
+            "completed_kabupatens": [],
             "processed_files_count": 0,
             "last_updated": None,
             "failed_files": []
@@ -63,7 +55,6 @@ class ProgressTracker:
         self.load()
 
     def load(self):
-        # Muat status global dari progress_tracker.json dan seluruh progress_tracker_w*.json
         all_trackers = set()
         if os.path.exists("progress_tracker.json"):
             all_trackers.add("progress_tracker.json")
@@ -127,10 +118,6 @@ class ProgressTracker:
         })
         self.save()
 
-
-# ==============================================================================
-# 3. UNIVERSAL RECURSIVE STREAMER (CACHE-ENABLED)
-# ==============================================================================
 class UniversalStreamer:
     def __init__(self, source_path_or_url: str, cache_file: str = "gdrive_file_index.json"):
         self.source = source_path_or_url
@@ -138,7 +125,6 @@ class UniversalStreamer:
         self.is_gdrive = "drive.google.com" in source_path_or_url or (not os.path.exists(source_path_or_url) and len(source_path_or_url) > 20)
 
     def list_files(self, force_rescan: bool = False) -> List[Dict[str, Any]]:
-        # 1. Cek Cache Lokal jika mode GDrive
         if self.is_gdrive and not force_rescan and os.path.exists(self.cache_file):
             try:
                 print(f"[*] Memuat indeks file Google Drive dari cache lokal: '{self.cache_file}'...", flush=True)
@@ -152,7 +138,6 @@ class UniversalStreamer:
 
         file_list = []
         if not self.is_gdrive:
-            # Mode Folder Lokal
             print(f"[*] Memindai folder lokal: '{self.source}'...", flush=True)
             for root, _, files in os.walk(self.source):
                 for f in files:
@@ -174,7 +159,6 @@ class UniversalStreamer:
             print(f"[OK] Ditemukan {len(file_list)} file PDF di folder lokal.\n", flush=True)
             return file_list
         else:
-            # Mode Google Drive Recursive
             import gdown
             print(f"[*] Memindai struktur folder Google Drive 34 Provinsi...", flush=True)
             raw_files = gdown.download_folder(self.source, skip_download=True, quiet=False)
@@ -233,10 +217,6 @@ class UniversalStreamer:
                     time.sleep(2 * attempt)
             raise RuntimeError(f"Gagal stream file {file_info.get('name')}")
 
-
-# ==============================================================================
-# 4. BPS STATISTICAL TABLE PARSER & ADVANCED TEXT CLEANER
-# ==============================================================================
 class BPSStatisticalParser:
     SECTORS_MAP = {
         "1": "1_Geografi_Iklim",
@@ -256,10 +236,8 @@ class BPSStatisticalParser:
         if not s:
             return ""
         
-        # 1. Simbol centang
         s = s.replace('\u221a', 'Ya').replace('✓', 'Ya').replace('✔', 'Ya')
         
-        # 2. Filter baris pecahan watermark vertikal
         lines = s.split('\n')
         cleaned_lines = []
         for l in lines:
@@ -272,17 +250,14 @@ class BPSStatisticalParser:
         
         s = ' '.join(cleaned_lines)
         
-        # 3. Bersihkan huruf watermark tunggal yang tercecer
         s = re.sub(r'^(?:[a-zA-Z\.\:\/]\s+)+', '', s)
         s = re.sub(r'(?:\s+[a-zA-Z\.\:\/])+$', '', s)
         s = re.sub(r'\s+[diogspbakthrce]\s+', ' ', s, flags=re.IGNORECASE)
         
-        # 4. Rapikan tanda baca & spasi
         s = re.sub(r'\s*[\/]{2,}\s*', ' / ', s)
         s = re.sub(r'\s*\:\s*$', '', s)
         s = re.sub(r'\s+', ' ', s).strip()
         
-        # 5. Bersihkan sel angka tertempel watermark
         if re.search(r'\d', s):
             stripped_num = re.sub(r'[diogspbakthrce/\.:\s]', '', s)
             if re.match(r'^-?\d+(?:[\.,]\d+)?$', stripped_num):
@@ -292,7 +267,6 @@ class BPSStatisticalParser:
                         return m.group(0)
                 return stripped_num
                 
-        # 6. Jika seluruh sel hanya sisa huruf watermark
         if re.match(r'^(?:[diogspbakthrce/\.:\s])+$', s, re.IGNORECASE):
             return ""
 
@@ -307,15 +281,12 @@ class BPSStatisticalParser:
 
     @classmethod
     def _detect_metadata(cls, pdf: pdfplumber.PDF, filename: str, prov_hint: str, kab_hint: str) -> Tuple[str, str, str, str]:
-        # 1. Tahun
         year_match = re.search(r'(20\d{2}|19\d{2})', filename)
         year = year_match.group(1) if year_match else "2026"
 
-        # 2. Kecamatan
         kec_match = re.search(r'Kecamatan\s+([A-Za-z0-9\s]+?)(?=\s+Dalam\s+Angka|\s+\d{4}|$)', filename, re.IGNORECASE)
         kecamatan = kec_match.group(1).strip() if kec_match else "Kecamatan_Unknown"
 
-        # 3. Kabupaten & Provinsi
         provinsi = prov_hint if prov_hint and prov_hint != "Provinsi_Umum" else "Provinsi_Lainnya"
         kabupaten = kab_hint if kab_hint and kab_hint != "Kabupaten_Umum" else None
 
@@ -490,16 +461,8 @@ class BPSStatisticalParser:
             tables=tables
         )
 
-
-# ==============================================================================
-# 5. INCREMENTAL REAL-TIME EXCEL EXPORTER (PER-FILE APPEND TO DISK)
-# ==============================================================================
 class IncrementalKabupatenExcelExporter:
-    """
-    Menyimpan hasil ekstraksi secara LINEAR & REAL-TIME:
-    - Begitu 1 PDF kecamatan selesai -> Langsung disimpan ke file .xlsx Kabupaten di disk.
-    - Menambahkan baris secara realtime ke sheet Data_Visualisasi, Katalog_Tabel, dan Sektor terkait.
-    """
+    
 
     def __init__(self, output_dir: str = "output_kabupaten"):
         self.output_dir = output_dir
@@ -548,16 +511,14 @@ class IncrementalKabupatenExcelExporter:
         return wb
 
     def append_document(self, doc: DocumentStatsResult) -> str:
-        """Menambahkan data 1 dokumen kecamatan ke dalam workbook Kabupaten secara real-time."""
+        
         xlsx_path = self.get_output_path(doc.provinsi, doc.kabupaten_kota)
         wb = self._get_or_create_workbook(xlsx_path)
 
         ws_catalog = wb["Katalog_Tabel"]
         ws_vis = wb["Data_Visualisasi"]
 
-        # Tulis setiap tabel dari dokumen ini
         for tbl in doc.tables:
-            # 1. Tambah ke Katalog
             cat_no = ws_catalog.max_row
             ws_catalog.append([
                 cat_no,
@@ -577,7 +538,6 @@ class IncrementalKabupatenExcelExporter:
                 cell.font = self.font_data
                 cell.border = self.border_thin
 
-            # 2. Tambah ke Data_Visualisasi
             if len(tbl.headers) >= 2:
                 for r in tbl.rows:
                     row_key = r[0] if len(r) > 0 else "Total"
@@ -610,20 +570,17 @@ class IncrementalKabupatenExcelExporter:
                                     c_elem.font = self.font_data
                                     c_elem.border = self.border_thin
 
-            # 3. Tambah ke Sektor Sheet
             sec_title = tbl.sector[:31]
             if sec_title not in wb.sheetnames:
                 ws_sec = wb.create_sheet(title=sec_title)
             else:
                 ws_sec = wb[sec_title]
 
-            # Banner Judul Tabel
             t_label = f"[{doc.kecamatan} - {doc.year}] {('Tabel ' + tbl.table_number + ': ') if tbl.table_number else ''}{tbl.title} (Hal. {tbl.page_number})"
             ws_sec.append([t_label])
             banner_cell = ws_sec.cell(row=ws_sec.max_row, column=1)
             banner_cell.font = self.font_table_banner
 
-            # Header Kolom
             ws_sec.append(tbl.headers)
             h_row_idx = ws_sec.max_row
             for col_i in range(1, len(tbl.headers) + 1):
@@ -633,7 +590,6 @@ class IncrementalKabupatenExcelExporter:
                 c_elem.border = self.border_thin
                 c_elem.alignment = Alignment(horizontal="center", vertical="center", wrap_text=True)
 
-            # Baris Data
             for r in tbl.rows:
                 ws_sec.append(r)
                 d_row_idx = ws_sec.max_row
@@ -646,7 +602,6 @@ class IncrementalKabupatenExcelExporter:
 
             ws_sec.append([])
 
-        # Auto-adjust lebar kolom
         for sheet in wb.worksheets:
             for col in sheet.columns:
                 max_len = 0
@@ -658,7 +613,6 @@ class IncrementalKabupatenExcelExporter:
                 adjusted_width = min(max(max_len + 3, 12), 65)
                 sheet.column_dimensions[col_letter].width = adjusted_width
 
-        # Simpan langsung ke file di disk
         wb.save(xlsx_path)
         return xlsx_path
 
@@ -673,10 +627,6 @@ class IncrementalKabupatenExcelExporter:
             cell.alignment = Alignment(horizontal="center", vertical="center", wrap_text=True)
             cell.border = self.border_thin
 
-
-# ==============================================================================
-# 6. MAIN ENGINE (REAL-TIME LINEAR PROCESSING)
-# ==============================================================================
 def run_supex(
     target_url_or_path: str = "https://drive.google.com/drive/folders/1BLO-ZkOvEvo4mlVQVfTU5I5GGU1q791i?usp=sharing",
     output_dir: str = "output_kabupaten",
@@ -706,24 +656,20 @@ def run_supex(
     print(f"[*] Mode Simpan   : Real-Time Incremental (Langsung Tulis per File)", flush=True)
     print("=" * 70 + "\n", flush=True)
 
-    # 1. Listing File (Memuat dari cache instan)
     all_files = streamer.list_files(force_rescan=force_rescan)
     if not all_files:
         print("[!] Tidak ada file yang ditemukan untuk diproses.", flush=True)
         return
 
-    # 2. Kelompokkan File per Kabupaten
     kabupaten_map: Dict[Tuple[str, str], List[Dict[str, Any]]] = {}
     for f in all_files:
         p = f.get("provinsi", "Provinsi_Umum")
         k = f.get("kabupaten", "Kabupaten_Umum")
         kabupaten_map.setdefault((p, k), []).append(f)
 
-    # Urutkan secara deterministik agar semua worker memiliki susunan index yang persis sama
     sorted_kabupatens = sorted(kabupaten_map.items(), key=lambda x: (x[0][0], x[0][1]))
     total_all_kabupatens = len(sorted_kabupatens)
 
-    # Pembagian Sharding Modulo: (global_index - 1) % total_workers == (worker_id - 1)
     worker_kabupatens = [
         (global_idx, item) for global_idx, item in enumerate(sorted_kabupatens, 1)
         if (global_idx - 1) % total_workers == (worker_id - 1)
@@ -734,12 +680,10 @@ def run_supex(
     print(f"[*] Porsi Worker Ini : {len(worker_kabupatens)} Kabupaten/Kota", flush=True)
     print(f"[*] Global Progress  : {total_processed_files:,} / {len(all_files):,} file PDF selesai ({total_processed_files/max(len(all_files), 1)*100:.1f}%)\n", flush=True)
 
-    # 3. Iterasi per Kabupaten untuk Worker ini
     for local_idx, (global_idx, ((prov, kab), file_group)) in enumerate(worker_kabupatens, 1):
         kab_key = f"{prov}_{kab}"
         expected_output = exporter.get_output_path(prov, kab)
 
-        # Cek apakah seluruh file di kabupaten ini sudah selesai
         all_files_done = all(tracker.is_file_completed(f["id"]) for f in file_group)
         if all_files_done and os.path.exists(expected_output):
             print(f"[W{worker_id}] [{local_idx}/{len(worker_kabupatens)}] [Global #{global_idx}] [✓ SUDAH SELESAI] {prov} ➔ {kab} (Dilewati)", flush=True)
@@ -755,12 +699,10 @@ def run_supex(
             file_id = f_info["id"]
             fname = f_info["name"]
 
-            # Skip per file jika file ini sudah pernah disimpan
             if tracker.is_file_completed(file_id):
                 print(f"  [{f_idx:02d}/{len(file_group):02d}] ⏭️ [SKIP] {fname} (Sudah ada di Excel)", flush=True)
                 continue
 
-            # Deteksi preview nama kecamatan & tahun
             kec_preview = re.search(r'Kecamatan\s+([A-Za-z0-9\s]+?)(?=\s+Dalam\s+Angka|\s+\d{4}|$)', fname, re.IGNORECASE)
             kec_name = kec_preview.group(1).strip() if kec_preview else "Kecamatan"
             year_preview = re.search(r'(20\d{2}|19\d{2})', fname)
@@ -768,10 +710,8 @@ def run_supex(
 
             t0 = time.time()
             try:
-                # 1. Stream PDF ke RAM
                 pdf_stream = streamer.stream_to_memory(f_info)
                 
-                # 2. Ekstrak Tabel Statistik
                 doc_res = BPSStatisticalParser.parse_document(
                     file_stream=pdf_stream,
                     file_id=file_id,
@@ -783,11 +723,9 @@ def run_supex(
                 pdf_stream.close()
                 del pdf_stream
 
-                # 3. REAL-TIME APPEND: Simpan langsung ke file Excel di disk
                 if doc_res.tables:
                     exporter.append_document(doc_res)
 
-                # 4. Catat status selesai di progress tracker
                 tracker.mark_file_completed(file_id, fname)
                 elapsed = time.time() - t0
 
@@ -797,14 +735,12 @@ def run_supex(
                 print(f"  [{f_idx:02d}/{len(file_group):02d}] ✗ [ERROR] {fname} -> {str(e)}", flush=True)
                 tracker.log_failure(f_info, str(e))
 
-        # Tandai Kabupaten selesai
         tracker.mark_kabupaten_completed(kab_key)
         print(f"  🎉 [KABUPATEN SELESAI] {os.path.basename(expected_output)}\n", flush=True)
 
     print("\n" + "=" * 70, flush=True)
     print(f"   🎉 [SELESAI] SELURUH PORSI TUGAS WORKER {worker_id} DARI {total_workers} TELAH TUNTAS!", flush=True)
     print("=" * 70 + "\n", flush=True)
-
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="SUPEX - BPS Statistical Extractor (Multi-Terminal Sharding)")
