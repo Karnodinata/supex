@@ -236,7 +236,7 @@ class BPSStatisticalParser:
         if not s:
             return ""
         
-        s = s.replace('\u221a', 'Ya').replace('✓', 'Ya').replace('✔', 'Ya')
+        s = s.replace('\u221a', 'Ya').replace('\u2713', 'Ya').replace('\u2714', 'Ya')
         
         lines = s.split('\n')
         cleaned_lines = []
@@ -686,11 +686,11 @@ def run_supex(
 
         all_files_done = all(tracker.is_file_completed(f["id"]) for f in file_group)
         if all_files_done and os.path.exists(expected_output):
-            print(f"[W{worker_id}] [{local_idx}/{len(worker_kabupatens)}] [Global #{global_idx}] [✓ SUDAH SELESAI] {prov} ➔ {kab} (Dilewati)", flush=True)
+            print(f"[W{worker_id}] [{local_idx}/{len(worker_kabupatens)}] [Global #{global_idx}] [SUDAH SELESAI] {prov} -> {kab} (Dilewati)", flush=True)
             continue
 
         print("-" * 70, flush=True)
-        print(f"[W{worker_id}] [{local_idx}/{len(worker_kabupatens)}] (Global #{global_idx}/{total_all_kabupatens}) MEMPROSES: {prov.upper()} ➔ {kab.upper()}", flush=True)
+        print(f"[W{worker_id}] [{local_idx}/{len(worker_kabupatens)}] (Global #{global_idx}/{total_all_kabupatens}) MEMPROSES: {prov.upper()} -> {kab.upper()}", flush=True)
         print(f"     Target Dokumen : {len(file_group)} file PDF Kecamatan", flush=True)
         print(f"     Target Output  : {os.path.basename(expected_output)}", flush=True)
         print("-" * 70, flush=True)
@@ -700,7 +700,7 @@ def run_supex(
             fname = f_info["name"]
 
             if tracker.is_file_completed(file_id):
-                print(f"  [{f_idx:02d}/{len(file_group):02d}] ⏭️ [SKIP] {fname} (Sudah ada di Excel)", flush=True)
+                print(f"  [{f_idx:02d}/{len(file_group):02d}] [SKIP] {fname} (Sudah ada di Excel)", flush=True)
                 continue
 
             kec_preview = re.search(r'Kecamatan\s+([A-Za-z0-9\s]+?)(?=\s+Dalam\s+Angka|\s+\d{4}|$)', fname, re.IGNORECASE)
@@ -729,17 +729,17 @@ def run_supex(
                 tracker.mark_file_completed(file_id, fname)
                 elapsed = time.time() - t0
 
-                print(f"  [{f_idx:02d}/{len(file_group):02d}] ✓ [DONE & SAVED] Kec. {doc_res.kecamatan}{yr_str} -> {len(doc_res.tables)} tabel ({elapsed:.1f}s)", flush=True)
+                print(f"  [{f_idx:02d}/{len(file_group):02d}] [DONE & SAVED] Kec. {doc_res.kecamatan}{yr_str} -> {len(doc_res.tables)} tabel ({elapsed:.1f}s)", flush=True)
 
             except Exception as e:
-                print(f"  [{f_idx:02d}/{len(file_group):02d}] ✗ [ERROR] {fname} -> {str(e)}", flush=True)
+                print(f"  [{f_idx:02d}/{len(file_group):02d}] [ERROR] {fname} -> {str(e)}", flush=True)
                 tracker.log_failure(f_info, str(e))
 
         tracker.mark_kabupaten_completed(kab_key)
-        print(f"  🎉 [KABUPATEN SELESAI] {os.path.basename(expected_output)}\n", flush=True)
+        print(f"  [KABUPATEN SELESAI] {os.path.basename(expected_output)}\n", flush=True)
 
     print("\n" + "=" * 70, flush=True)
-    print(f"   🎉 [SELESAI] SELURUH PORSI TUGAS WORKER {worker_id} DARI {total_workers} TELAH TUNTAS!", flush=True)
+    print(f"   [SELESAI] SELURUH PORSI TUGAS WORKER {worker_id} DARI {total_workers} TELAH TUNTAS!", flush=True)
     print("=" * 70 + "\n", flush=True)
 
 if __name__ == "__main__":

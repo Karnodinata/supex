@@ -1,22 +1,22 @@
 # SUPEX - BPS Statistical PDF to Excel Real-Time Extractor
 
-**SUPEX** (*Statistical Universal PDF Extractor*) adalah sistem otomasi *end-to-end* berbasis Python untuk mengekstrak, membersihkan, dan menstandarisasi data tabel statistik dari ribuan publikasi PDF resmi Badan Pusat Statistik (BPS)—khususnya seri publikasi tahunan **"Kecamatan Dalam Angka"** dari 34 Provinsi di Indonesia—langsung ke dalam format spreadsheet Excel (`.xlsx`) per Kabupaten/Kota.
+SUPEX (Statistical Universal PDF Extractor) adalah sistem otomasi end-to-end berbasis Python untuk mengekstrak, membersihkan, dan menstandarisasi data tabel statistik dari ribuan publikasi PDF resmi Badan Pusat Statistik (BPS)—khususnya seri publikasi tahunan "Kecamatan Dalam Angka" dari 34 Provinsi di Indonesia—langsung ke dalam format spreadsheet Excel (.xlsx) per Kabupaten/Kota.
 
 ---
 
-## 🚀 Fitur Unggulan
+## Fitur Utama
 
 1. **In-Memory Streaming (Zero Local PDF Storage)**
-   - Mengambil data file PDF langsung dari Google Drive via HTTP stream ke memori virtual RAM (`io.BytesIO`).
+   - Mengambil data file PDF langsung dari Google Drive via HTTP stream ke memori virtual RAM (io.BytesIO).
    - Hard disk tidak terbebani file sampah PDF berukuran puluhan hingga ratusan Gigabyte. Begitu tabel diekstrak, RAM langsung dibebaskan.
 
 2. **Smart Watermark & Text Cleaner**
-   - Membersihkan watermark vertikal khas dokumen BPS (`diogspbakthrce`) yang sering menempel pada angka dan teks.
-   - Menghapus baris panduan penomoran kolom standar BPS seperti `(1)`, `(2)`, `(3)`.
-   - Menggabungkan sel baris header atas dan bawah (*multi-level headers*) menjadi kolom terpadu.
+   - Membersihkan watermark vertikal khas dokumen BPS (diogspbakthrce) yang sering menempel pada angka dan teks.
+   - Menghapus baris panduan penomoran kolom standar BPS seperti (1), (2), (3).
+   - Menggabungkan sel baris header atas dan bawah (multi-level headers) menjadi kolom terpadu.
 
 3. **Incremental Real-Time Exporter**
-   - Menyimpan hasil secara linier dan bertahap per file kecamatan langsung ke file `.xlsx` Kabupaten terkait di folder `output_kabupaten/`.
+   - Menyimpan hasil secara linier dan bertahap per file kecamatan langsung ke file .xlsx Kabupaten terkait di folder output_kabupaten/.
    - Jika proses terhenti di tengah jalan, data yang sudah masuk ke Excel tidak akan hilang atau corrupt.
 
 4. **Multi-Worker Sharding (Parallel Execution)**
@@ -25,24 +25,24 @@
    - Antar worker otomatis memproses kabupaten yang berbeda tanpa perlu database server pusat.
 
 5. **State Tracking & Resumability**
-   - Status setiap dokumen dicatat ke `progress_tracker*.json`.
-   - Sistem otomatis melewati (*skip*) file atau kabupaten yang telah selesai diekstrak saat script dijalankan kembali.
+   - Status setiap dokumen dicatat ke progress_tracker*.json.
+   - Sistem otomatis melewati (skip) file atau kabupaten yang telah selesai diekstrak saat script dijalankan kembali.
 
 ---
 
-## 📊 Struktur Output File Excel (`.xlsx`)
+## Struktur Output File Excel (.xlsx)
 
-Setiap Kabupaten/Kota menghasilkan 1 file Excel (misal: `Jawa_Timur_Kab._Kediri.xlsx`) yang memiliki struktur sheet:
+Setiap Kabupaten/Kota menghasilkan 1 file Excel (misal: Jawa_Timur_Kab._Kediri.xlsx) yang memiliki struktur sheet:
 
 | Nama Sheet | Deskripsi & Fungsi |
 | :--- | :--- |
-| **`Katalog_Tabel`** | Indeks daftar isi seluruh tabel statistik yang berhasil diekstrak (Kecamatan, Tahun, Sektor, Nomor Tabel, Judul Tabel, Halaman, dan Jumlah Baris). |
-| **`Data_Visualisasi`** | Format tabel ternormalisasi (*unpivoted / long format*) berisi kolom `[Provinsi, Kabupaten, Kecamatan, Tahun, Sektor, Nomor_Tabel, Judul_Tabel, Uraian_Indikator, Variabel_Kolom, Nilai_Statistik]`. Sangat cocok langsung dihubungkan ke **Power BI, Tableau, Streamlit, atau database SQL**. |
-| **Sheet Sektor** *(misal `3_Penduduk`, `5_Pertanian`)* | Menampilkan tabel asli lengkap dengan banner judul, header kolom bergradasi biru, perataan angka, border sel, dan penyesuaian lebar kolom otomatis (*auto-fit column width*). |
+| **Katalog_Tabel** | Indeks daftar isi seluruh tabel statistik yang berhasil diekstrak (Kecamatan, Tahun, Sektor, Nomor Tabel, Judul Tabel, Halaman, dan Jumlah Baris). |
+| **Data_Visualisasi** | Format tabel ternormalisasi (unpivoted / long format) berisi kolom [Provinsi, Kabupaten, Kecamatan, Tahun, Sektor, Nomor_Tabel, Judul_Tabel, Uraian_Indikator, Variabel_Kolom, Nilai_Statistik]. Sangat cocok langsung dihubungkan ke Power BI, Tableau, Streamlit, atau database SQL. |
+| **Sheet Sektor** *(misal 3_Penduduk, 5_Pertanian)* | Menampilkan tabel asli lengkap dengan banner judul, header kolom bergradasi biru, perataan angka, border sel, dan penyesuaian lebar kolom otomatis (auto-fit column width). |
 
 ---
 
-## 🛠️ Persyaratan & Instalasi
+## Persyaratan & Instalasi
 
 ### 1. Prasyarat Sistem
 * Python 3.8 atau versi yang lebih baru.
@@ -74,9 +74,9 @@ Setiap Kabupaten/Kota menghasilkan 1 file Excel (misal: `Jawa_Timur_Kab._Kediri.
 
 ---
 
-## 💻 Panduan Menjalankan Sistem
+## Panduan Menjalankan Sistem
 
-### A. Mode Tunggal (*Single Worker*)
+### A. Mode Tunggal (Single Worker)
 Untuk menjalankan ekstraksi secara berurutan pada 1 terminal:
 ```bash
 python supex.py
@@ -104,19 +104,19 @@ Untuk mempercepat ekstraksi, buka beberapa tab/jendela terminal secara bersamaan
 
 ---
 
-## ⚙️ Opsi Parameter CLI (`supex.py`)
+## Opsi Parameter CLI (supex.py)
 
 | Argumen | Tipe | Nilai Default | Keterangan |
 | :--- | :---: | :--- | :--- |
-| `--worker` | `int` | `1` | Nomor urut worker yang sedang berjalan (1, 2, 3, dst). |
-| `--total` | `int` | `1` | Total seluruh worker yang dialokasikan bersamaan. |
-| `--source` | `str` | URL Google Drive BPS | URL folder Google Drive atau path direktori lokal berisi file PDF. |
-| `--output` | `str` | `output_kabupaten` | Nama folder tujuan penyimpanan file Excel hasil ekstraksi. |
-| `--force-rescan` | *flag* | `False` | Memaksa pemindaian ulang struktur Google Drive (mengabaikan cache). |
+| `--worker` | int | 1 | Nomor urut worker yang sedang berjalan (1, 2, 3, dst). |
+| `--total` | int | 1 | Total seluruh worker yang dialokasikan bersamaan. |
+| `--source` | str | URL Google Drive BPS | URL folder Google Drive atau path direktori lokal berisi file PDF. |
+| `--output` | str | output_kabupaten | Nama folder tujuan penyimpanan file Excel hasil ekstraksi. |
+| `--force-rescan` | flag | False | Memaksa pemindaian ulang struktur Google Drive (mengabaikan cache). |
 
 ---
 
-## 📁 Struktur Berkas Proyek
+## Struktur Berkas Proyek
 
 ```text
 supex/
@@ -132,10 +132,10 @@ supex/
 
 ---
 
-## 🧩 Teknologi & Library yang Digunakan
+## Teknologi & Library yang Digunakan
 
-* **[pdfplumber](https://github.com/jsvine/pdfplumber)**: Ekstraksi struktur tabel PDF, koordinat sel, dan teks halaman.
-* **[openpyxl](https://openpyxl.readthedocs.io/)**: Pembuatan, penulisan incremental, dan styling sheet Excel (.xlsx).
-* **[requests](https://requests.readthedocs.io/)**: Pengambilan stream chunk binary file PDF dari Google Drive.
-* **[gdown](https://github.com/wkentaro/gdown)**: Pemetaan pohon direktori dan metadata Google Drive tanpa download.
+* **pdfplumber**: Ekstraksi struktur tabel PDF, koordinat sel, dan teks halaman.
+* **openpyxl**: Pembuatan, penulisan incremental, dan styling sheet Excel (.xlsx).
+* **requests**: Pengambilan stream chunk binary file PDF dari Google Drive.
+* **gdown**: Pemetaan pohon direktori dan metadata Google Drive tanpa download.
 * **re (Regular Expressions)**: Algoritma pembersihan watermark, deteksi tahun publikasi, dan normalisasi tabel.
