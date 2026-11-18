@@ -26,220 +26,184 @@ html, body, [class*="css"], .stApp {
     letter-spacing: -0.01em;
 }
 
-/* Hilangkan seluruh warna solid bawaan Streamlit */
-header[data-testid="stHeader"],
-[data-testid="stAppViewContainer"],
-section.main,
-.block-container,
-[data-testid="stVerticalBlock"] {
-    background-color: transparent !important;
-    background: transparent !important;
-}
-
-/* Background Soft Gradient */
+/* Background Soft Gradient dengan Ambient Glow terintegrasi */
 .stApp {
     background: 
-        radial-gradient(circle at 10% 20%, rgba(186, 230, 253, 0.9) 0%, rgba(224, 231, 255, 0.7) 35%, transparent 70%),
-        radial-gradient(circle at 85% 25%, rgba(243, 232, 255, 0.95) 0%, rgba(219, 234, 254, 0.6) 45%, transparent 70%),
-        radial-gradient(circle at 50% 80%, rgba(233, 213, 255, 0.8) 0%, rgba(199, 210, 254, 0.7) 40%, transparent 75%),
+        radial-gradient(circle at 12% 18%, rgba(125, 211, 252, 0.75) 0%, rgba(199, 210, 254, 0.45) 28%, transparent 60%),
+        radial-gradient(circle at 85% 22%, rgba(216, 180, 254, 0.80) 0%, rgba(224, 231, 255, 0.45) 32%, transparent 65%),
+        radial-gradient(circle at 50% 85%, rgba(191, 219, 254, 0.70) 0%, rgba(233, 213, 255, 0.40) 35%, transparent 70%),
         linear-gradient(135deg, #e0f2fe 0%, #ede9fe 50%, #fdf4ff 100%) !important;
     background-attachment: fixed !important;
-    color: #1e293b !important;
-    position: relative;
-    overflow-x: hidden;
+    color: #0f172a !important;
 }
 
-/* Ambient Blobs Cahaya di Balik Kaca */
-.ambient-blob-1 {
-    position: fixed;
-    top: -50px;
-    left: -50px;
-    width: 500px;
-    height: 500px;
-    background: #7dd3fc;
-    border-radius: 50%;
-    filter: blur(80px);
-    opacity: 0.65;
-    pointer-events: none;
-    z-index: 0;
+/* Pastikan container utama berada di atas background dan tidak tertutup */
+.block-container {
+    position: relative !important;
+    z-index: 10 !important;
+    padding-top: 2rem !important;
+    padding-bottom: 4rem !important;
+    max-width: 1200px !important;
 }
 
-.ambient-blob-2 {
-    position: fixed;
-    top: 250px;
-    right: -80px;
-    width: 550px;
-    height: 550px;
-    background: #d8b4fe;
-    border-radius: 50%;
-    filter: blur(90px);
-    opacity: 0.60;
-    pointer-events: none;
-    z-index: 0;
-}
-
-.ambient-blob-3 {
-    position: fixed;
-    bottom: -60px;
-    left: 25%;
-    width: 480px;
-    height: 480px;
-    background: #bfdbfe;
-    border-radius: 50%;
-    filter: blur(85px);
-    opacity: 0.55;
-    pointer-events: none;
-    z-index: 0;
-}
-
-/* Pure Transparent Glass Card */
-.pure-glass-card {
-    background: rgba(255, 255, 255, 0.08) !important;
-    backdrop-filter: blur(24px) saturate(160%) !important;
-    -webkit-backdrop-filter: blur(24px) saturate(160%) !important;
-    border: 1px solid rgba(255, 255, 255, 0.35) !important;
-    border-top: 1px solid rgba(255, 255, 255, 0.6) !important;
-    border-radius: 24px !important;
-    box-shadow: 0 10px 32px 0 rgba(31, 38, 135, 0.08), inset 0 1px 1px 0 rgba(255, 255, 255, 0.4) !important;
-    padding: 24px !important;
-    position: relative;
-    z-index: 1;
-}
-
-/* Paksa Input Select Streamlit Menjadi Transparan Murni */
-div[data-baseweb="select"] {
+header[data-testid="stHeader"] {
     background: transparent !important;
 }
 
+/* Pure Glass Cards */
+.pure-glass-card {
+    background: rgba(255, 255, 255, 0.35) !important;
+    backdrop-filter: blur(24px) saturate(180%) !important;
+    -webkit-backdrop-filter: blur(24px) saturate(180%) !important;
+    border: 1px solid rgba(255, 255, 255, 0.65) !important;
+    border-top: 1px solid rgba(255, 255, 255, 0.9) !important;
+    border-radius: 24px !important;
+    box-shadow: 0 10px 32px 0 rgba(31, 38, 135, 0.08), inset 0 1px 2px 0 rgba(255, 255, 255, 0.6) !important;
+    padding: 24px !important;
+    margin-bottom: 20px !important;
+}
+
+.pure-glass-header {
+    background: rgba(255, 255, 255, 0.40) !important;
+    backdrop-filter: blur(24px) saturate(180%) !important;
+    -webkit-backdrop-filter: blur(24px) saturate(180%) !important;
+    border: 1px solid rgba(255, 255, 255, 0.7) !important;
+    border-top: 1px solid rgba(255, 255, 255, 0.95) !important;
+    border-radius: 24px !important;
+    box-shadow: 0 12px 36px 0 rgba(31, 38, 135, 0.09), inset 0 1px 2px 0 rgba(255, 255, 255, 0.8) !important;
+    padding: 28px !important;
+    margin-bottom: 24px !important;
+}
+
+.glass-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 4px 14px;
+    border-radius: 9999px;
+    font-size: 11px;
+    font-weight: 700;
+    background: rgba(255, 255, 255, 0.55);
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    color: #1e293b;
+    margin-bottom: 10px;
+}
+
+/* Glass Select & Input */
 div[data-baseweb="select"] > div {
-    background: rgba(255, 255, 255, 0.06) !important;
-    backdrop-filter: blur(20px) saturate(150%) !important;
-    -webkit-backdrop-filter: blur(20px) saturate(150%) !important;
-    border: 1px solid rgba(255, 255, 255, 0.3) !important;
-    border-top: 1px solid rgba(255, 255, 255, 0.5) !important;
-    border-radius: 16px !important;
-    box-shadow: 0 4px 12px 0 rgba(31, 38, 135, 0.04), inset 0 1px 1px 0 rgba(255, 255, 255, 0.25) !important;
+    background: rgba(255, 255, 255, 0.45) !important;
+    backdrop-filter: blur(16px) saturate(160%) !important;
+    -webkit-backdrop-filter: blur(16px) saturate(160%) !important;
+    border: 1px solid rgba(255, 255, 255, 0.7) !important;
+    border-top: 1px solid rgba(255, 255, 255, 0.9) !important;
+    border-radius: 14px !important;
+    box-shadow: 0 4px 12px 0 rgba(31, 38, 135, 0.04), inset 0 1px 1px rgba(255, 255, 255, 0.5) !important;
     color: #0f172a !important;
-    transition: all 0.25s ease !important;
 }
 
 div[data-baseweb="select"] > div:hover {
-    background: rgba(255, 255, 255, 0.12) !important;
-    border-color: rgba(165, 180, 252, 0.6) !important;
-    box-shadow: 0 6px 18px 0 rgba(99, 102, 241, 0.1) !important;
+    background: rgba(255, 255, 255, 0.65) !important;
+    border-color: rgba(147, 197, 253, 0.9) !important;
+    box-shadow: 0 6px 18px 0 rgba(99, 102, 241, 0.12) !important;
 }
 
-div[data-baseweb="select"] input {
-    color: #0f172a !important;
-    font-family: 'Courier Prime', 'Space Mono', monospace !important;
-}
-
-/* Glass Tag Pills */
 span[data-baseweb="tag"] {
-    background: rgba(255, 255, 255, 0.18) !important;
+    background: rgba(255, 255, 255, 0.75) !important;
     backdrop-filter: blur(10px) !important;
-    -webkit-backdrop-filter: blur(10px) !important;
-    border: 1px solid rgba(255, 255, 255, 0.45) !important;
+    border: 1px solid rgba(255, 255, 255, 0.9) !important;
     border-radius: 9999px !important;
-    color: #1e293b !important;
-    font-weight: 500 !important;
-    box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.3) !important;
+    color: #0f172a !important;
+    font-weight: 600 !important;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05) !important;
 }
 
-/* Glass Button Primary */
+/* Tombol Glass */
 .stButton > button {
-    background: rgba(255, 255, 255, 0.12) !important;
+    background: rgba(255, 255, 255, 0.45) !important;
     backdrop-filter: blur(16px) !important;
     -webkit-backdrop-filter: blur(16px) !important;
-    border: 1px solid rgba(255, 255, 255, 0.4) !important;
-    border-top: 1px solid rgba(255, 255, 255, 0.7) !important;
+    border: 1px solid rgba(255, 255, 255, 0.8) !important;
+    border-top: 1px solid #ffffff !important;
     border-radius: 16px !important;
     color: #0f172a !important;
     font-family: 'Courier Prime', 'Space Mono', monospace !important;
     font-weight: 700 !important;
-    font-size: 13px !important;
+    font-size: 14px !important;
     padding: 14px 32px !important;
-    box-shadow: 0 4px 16px rgba(99, 102, 241, 0.12), inset 0 1px 1px rgba(255, 255, 255, 0.5) !important;
+    box-shadow: 0 6px 20px rgba(99, 102, 241, 0.12), inset 0 1px 2px #ffffff !important;
     transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
 }
 
 .stButton > button:hover {
-    background: rgba(255, 255, 255, 0.22) !important;
-    border-color: rgba(255, 255, 255, 0.65) !important;
+    background: rgba(255, 255, 255, 0.75) !important;
     transform: translateY(-2px) !important;
-    box-shadow: 0 8px 24px rgba(99, 102, 241, 0.18), inset 0 1px 2px rgba(255, 255, 255, 0.7) !important;
+    box-shadow: 0 10px 28px rgba(99, 102, 241, 0.18), inset 0 1px 2px #ffffff !important;
 }
 
-/* Glass Button Success (Download) */
 .stDownloadButton > button {
-    background: rgba(167, 243, 208, 0.22) !important;
+    background: rgba(167, 243, 208, 0.45) !important;
     backdrop-filter: blur(16px) !important;
     -webkit-backdrop-filter: blur(16px) !important;
-    border: 1px solid rgba(110, 231, 183, 0.45) !important;
-    border-top: 1px solid rgba(255, 255, 255, 0.7) !important;
+    border: 1px solid rgba(110, 231, 183, 0.7) !important;
+    border-top: 1px solid rgba(255, 255, 255, 0.9) !important;
     border-radius: 16px !important;
     color: #064e3b !important;
     font-family: 'Courier Prime', 'Space Mono', monospace !important;
     font-weight: 700 !important;
-    font-size: 13px !important;
+    font-size: 14px !important;
     padding: 14px 32px !important;
-    box-shadow: 0 4px 16px rgba(16, 185, 129, 0.1) !important;
+    box-shadow: 0 6px 20px rgba(16, 185, 129, 0.15) !important;
     transition: all 0.25s ease !important;
 }
 
 .stDownloadButton > button:hover {
-    background: rgba(167, 243, 208, 0.35) !important;
+    background: rgba(167, 243, 208, 0.70) !important;
     transform: translateY(-2px) !important;
-    box-shadow: 0 8px 24px rgba(16, 185, 129, 0.16) !important;
+    box-shadow: 0 10px 28px rgba(16, 185, 129, 0.22) !important;
 }
 
-/* Expanders Glass */
+/* Glass Expander */
 [data-testid="stExpander"] {
-    background: rgba(255, 255, 255, 0.08) !important;
+    background: rgba(255, 255, 255, 0.30) !important;
     backdrop-filter: blur(20px) !important;
-    -webkit-backdrop-filter: blur(20px) !important;
-    border: 1px solid rgba(255, 255, 255, 0.35) !important;
+    border: 1px solid rgba(255, 255, 255, 0.6) !important;
     border-radius: 18px !important;
-    box-shadow: 0 8px 24px 0 rgba(31, 38, 135, 0.06) !important;
+    box-shadow: 0 8px 24px 0 rgba(31, 38, 135, 0.05) !important;
     margin-bottom: 14px !important;
 }
 
-/* Dataframe Container Transparan */
+/* Dataframe Styling */
 [data-testid="stDataFrame"] {
-    background: rgba(255, 255, 255, 0.06) !important;
+    background: rgba(255, 255, 255, 0.35) !important;
     backdrop-filter: blur(16px) !important;
-    border: 1px solid rgba(255, 255, 255, 0.3) !important;
+    border: 1px solid rgba(255, 255, 255, 0.6) !important;
     border-radius: 14px !important;
+    padding: 8px !important;
 }
 </style>
-
-<!-- Inject Ambient Blobs -->
-<div class="ambient-blob-1"></div>
-<div class="ambient-blob-2"></div>
-<div class="ambient-blob-3"></div>
 """
 
 st.markdown(CUSTOM_CSS, unsafe_allow_html=True)
 
-# Header Card
+# Header Section
 st.markdown("""
-<div class="pure-glass-card" style="margin-bottom: 24px;">
+<div class="pure-glass-header">
     <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;">
         <div>
-            <div style="display: inline-flex; align-items: center; gap: 8px; padding: 4px 12px; border-radius: 9999px; font-size: 11px; font-weight: 700; background: rgba(255, 255, 255, 0.2); border: 1px solid rgba(255, 255, 255, 0.4); color: #334155; margin-bottom: 8px;">
+            <div class="glass-badge">
                 <span style="display:inline-block; width:8px; height:8px; border-radius:50%; background:#0284c7;"></span>
                 BPS Statistical System
             </div>
-            <h1 style="font-size: 26px; font-weight: 800; margin: 0 0 6px 0; color: #0f172a; letter-spacing: -0.02em;">
+            <h1 style="font-size: 26px; font-weight: 800; margin: 0 0 8px 0; color: #0f172a; letter-spacing: -0.02em;">
                 BPS Statistical Multi-Table Selector &amp; Exporter
             </h1>
             <p style="font-size: 13px; color: #475569; margin: 0; max-width: 650px; line-height: 1.5;">
                 Saring data statistik wilayah bertingkat, pratinjau tabel pivot 2D, dan ekspor ke lembar kerja Excel gabungan.
             </p>
         </div>
-        <div class="pure-glass-card" style="padding: 10px 18px; border-radius: 16px; text-align: right;">
-            <div style="font-size: 11px; color: #64748b; font-weight: 500;">Database Engine</div>
-            <div style="font-size: 13px; color: #0f172a; font-weight: 700;">DuckDB Parquet</div>
+        <div style="background: rgba(255,255,255,0.45); padding: 12px 20px; border-radius: 18px; border: 1px solid rgba(255,255,255,0.8); text-align: right; box-shadow: 0 4px 12px rgba(0,0,0,0.03);">
+            <div style="font-size: 11px; color: #64748b; font-weight: 600;">Database Engine</div>
+            <div style="font-size: 14px; color: #0f172a; font-weight: 800;">DuckDB Parquet</div>
         </div>
     </div>
 </div>
@@ -257,7 +221,7 @@ def get_db():
 
 con = get_db()
 
-# Filter Section Layout
+# Filter Columns Layout
 col1, col2 = st.columns(2)
 
 with col1:
@@ -369,11 +333,11 @@ if execute_btn:
         total_tables = len(table_groups)
 
         st.markdown(f"""
-        <div class="pure-glass-card" style="border-color: rgba(16, 185, 129, 0.4); display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+        <div class="pure-glass-card" style="border-color: rgba(16, 185, 129, 0.5); display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
             <div style="font-weight: 700; color: #064e3b; font-size: 13px;">
                 Ditemukan <strong>{total_tables} tabel unik</strong> dari kombinasi filter yang dipilih.
             </div>
-            <span style="background: rgba(16, 185, 129, 0.15); color: #065f46; font-size: 11px; font-weight: 700; padding: 4px 12px; border-radius: 9999px;">
+            <span style="background: rgba(16, 185, 129, 0.2); color: #064e3b; font-size: 11px; font-weight: 700; padding: 4px 14px; border-radius: 9999px; border: 1px solid rgba(16, 185, 129, 0.4);">
                 Siap Ekspor
             </span>
         </div>
