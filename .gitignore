@@ -12,7 +12,10 @@ __pycache__/
 output_kabupaten/
 tes dulu/
 *.tmp
+*.parquet
 
-# IDE Settings
+# IDE & Agent Settings
 .vscode/
 .idea/
+.agents/
+.claude/
