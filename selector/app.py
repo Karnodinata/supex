@@ -17,7 +17,6 @@ st.set_page_config(
     initial_sidebar_state="collapsed"
 )
 
-# Custom CSS & Font Injection based on update.py Glassmorphism & Typewriter Style
 CUSTOM_CSS = """
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap');
@@ -25,6 +24,16 @@ CUSTOM_CSS = """
 html, body, [class*="css"], .stApp {
     font-family: 'Courier Prime', 'Space Mono', Courier, monospace !important;
     letter-spacing: -0.01em;
+}
+
+/* Hilangkan seluruh warna solid bawaan Streamlit */
+header[data-testid="stHeader"],
+[data-testid="stAppViewContainer"],
+section.main,
+.block-container,
+[data-testid="stVerticalBlock"] {
+    background-color: transparent !important;
+    background: transparent !important;
 }
 
 /* Background Soft Gradient */
@@ -36,159 +45,199 @@ html, body, [class*="css"], .stApp {
         linear-gradient(135deg, #e0f2fe 0%, #ede9fe 50%, #fdf4ff 100%) !important;
     background-attachment: fixed !important;
     color: #1e293b !important;
+    position: relative;
+    overflow-x: hidden;
 }
 
-/* Glass Cards */
-.glass-header-card {
-    background: rgba(255, 255, 255, 0.12);
-    backdrop-filter: blur(24px) saturate(160%);
-    -webkit-backdrop-filter: blur(24px) saturate(160%);
-    border: 1px solid rgba(255, 255, 255, 0.45);
-    border-top: 1px solid rgba(255, 255, 255, 0.7);
-    border-radius: 24px;
-    padding: 28px;
-    margin-bottom: 24px;
-    box-shadow: 0 10px 32px 0 rgba(31, 38, 135, 0.08), inset 0 1px 1px 0 rgba(255, 255, 255, 0.5);
+/* Ambient Blobs Cahaya di Balik Kaca */
+.ambient-blob-1 {
+    position: fixed;
+    top: -50px;
+    left: -50px;
+    width: 500px;
+    height: 500px;
+    background: #7dd3fc;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.65;
+    pointer-events: none;
+    z-index: 0;
 }
 
-.glass-section-card {
-    background: rgba(255, 255, 255, 0.10);
-    backdrop-filter: blur(20px) saturate(150%);
-    -webkit-backdrop-filter: blur(20px) saturate(150%);
-    border: 1px solid rgba(255, 255, 255, 0.35);
-    border-top: 1px solid rgba(255, 255, 255, 0.6);
-    border-radius: 20px;
-    padding: 22px;
-    margin-bottom: 16px;
-    box-shadow: 0 8px 24px 0 rgba(31, 38, 135, 0.06), inset 0 1px 1px 0 rgba(255, 255, 255, 0.4);
+.ambient-blob-2 {
+    position: fixed;
+    top: 250px;
+    right: -80px;
+    width: 550px;
+    height: 550px;
+    background: #d8b4fe;
+    border-radius: 50%;
+    filter: blur(90px);
+    opacity: 0.60;
+    pointer-events: none;
+    z-index: 0;
 }
 
-.glass-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    padding: 4px 12px;
-    border-radius: 9999px;
-    font-size: 11px;
-    font-weight: 700;
-    background: rgba(255, 255, 255, 0.25);
-    border: 1px solid rgba(255, 255, 255, 0.5);
-    color: #334155;
-    margin-bottom: 10px;
+.ambient-blob-3 {
+    position: fixed;
+    bottom: -60px;
+    left: 25%;
+    width: 480px;
+    height: 480px;
+    background: #bfdbfe;
+    border-radius: 50%;
+    filter: blur(85px);
+    opacity: 0.55;
+    pointer-events: none;
+    z-index: 0;
 }
 
-/* Streamlit Input & Multi-select Glass Styling */
-div[data-baseweb="select"] > div {
-    background: rgba(255, 255, 255, 0.14) !important;
-    backdrop-filter: blur(16px) !important;
-    -webkit-backdrop-filter: blur(16px) !important;
-    border: 1px solid rgba(255, 255, 255, 0.4) !important;
+/* Pure Transparent Glass Card */
+.pure-glass-card {
+    background: rgba(255, 255, 255, 0.08) !important;
+    backdrop-filter: blur(24px) saturate(160%) !important;
+    -webkit-backdrop-filter: blur(24px) saturate(160%) !important;
+    border: 1px solid rgba(255, 255, 255, 0.35) !important;
     border-top: 1px solid rgba(255, 255, 255, 0.6) !important;
-    border-radius: 14px !important;
-    box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.3) !important;
+    border-radius: 24px !important;
+    box-shadow: 0 10px 32px 0 rgba(31, 38, 135, 0.08), inset 0 1px 1px 0 rgba(255, 255, 255, 0.4) !important;
+    padding: 24px !important;
+    position: relative;
+    z-index: 1;
+}
+
+/* Paksa Input Select Streamlit Menjadi Transparan Murni */
+div[data-baseweb="select"] {
+    background: transparent !important;
+}
+
+div[data-baseweb="select"] > div {
+    background: rgba(255, 255, 255, 0.06) !important;
+    backdrop-filter: blur(20px) saturate(150%) !important;
+    -webkit-backdrop-filter: blur(20px) saturate(150%) !important;
+    border: 1px solid rgba(255, 255, 255, 0.3) !important;
+    border-top: 1px solid rgba(255, 255, 255, 0.5) !important;
+    border-radius: 16px !important;
+    box-shadow: 0 4px 12px 0 rgba(31, 38, 135, 0.04), inset 0 1px 1px 0 rgba(255, 255, 255, 0.25) !important;
     color: #0f172a !important;
+    transition: all 0.25s ease !important;
 }
 
 div[data-baseweb="select"] > div:hover {
-    background: rgba(255, 255, 255, 0.22) !important;
-    border-color: rgba(165, 180, 252, 0.7) !important;
+    background: rgba(255, 255, 255, 0.12) !important;
+    border-color: rgba(165, 180, 252, 0.6) !important;
+    box-shadow: 0 6px 18px 0 rgba(99, 102, 241, 0.1) !important;
 }
 
-/* Tags in multi-select */
-span[data-baseweb="tag"] {
-    background: rgba(255, 255, 255, 0.30) !important;
-    backdrop-filter: blur(10px) !important;
-    border: 1px solid rgba(255, 255, 255, 0.5) !important;
-    border-radius: 9999px !important;
+div[data-baseweb="select"] input {
     color: #0f172a !important;
-    font-weight: 600 !important;
+    font-family: 'Courier Prime', 'Space Mono', monospace !important;
 }
 
-/* Buttons */
+/* Glass Tag Pills */
+span[data-baseweb="tag"] {
+    background: rgba(255, 255, 255, 0.18) !important;
+    backdrop-filter: blur(10px) !important;
+    -webkit-backdrop-filter: blur(10px) !important;
+    border: 1px solid rgba(255, 255, 255, 0.45) !important;
+    border-radius: 9999px !important;
+    color: #1e293b !important;
+    font-weight: 500 !important;
+    box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.3) !important;
+}
+
+/* Glass Button Primary */
 .stButton > button {
-    background: rgba(255, 255, 255, 0.20) !important;
+    background: rgba(255, 255, 255, 0.12) !important;
     backdrop-filter: blur(16px) !important;
     -webkit-backdrop-filter: blur(16px) !important;
-    border: 1px solid rgba(255, 255, 255, 0.5) !important;
-    border-top: 1px solid rgba(255, 255, 255, 0.8) !important;
+    border: 1px solid rgba(255, 255, 255, 0.4) !important;
+    border-top: 1px solid rgba(255, 255, 255, 0.7) !important;
     border-radius: 16px !important;
     color: #0f172a !important;
     font-family: 'Courier Prime', 'Space Mono', monospace !important;
     font-weight: 700 !important;
     font-size: 13px !important;
-    padding: 12px 28px !important;
-    box-shadow: 0 6px 20px rgba(99, 102, 241, 0.12), inset 0 1px 2px rgba(255, 255, 255, 0.6) !important;
+    padding: 14px 32px !important;
+    box-shadow: 0 4px 16px rgba(99, 102, 241, 0.12), inset 0 1px 1px rgba(255, 255, 255, 0.5) !important;
     transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
 }
 
 .stButton > button:hover {
-    background: rgba(255, 255, 255, 0.35) !important;
-    border-color: rgba(255, 255, 255, 0.8) !important;
+    background: rgba(255, 255, 255, 0.22) !important;
+    border-color: rgba(255, 255, 255, 0.65) !important;
     transform: translateY(-2px) !important;
-    box-shadow: 0 10px 28px rgba(99, 102, 241, 0.18), inset 0 1px 2px rgba(255, 255, 255, 0.8) !important;
+    box-shadow: 0 8px 24px rgba(99, 102, 241, 0.18), inset 0 1px 2px rgba(255, 255, 255, 0.7) !important;
 }
 
+/* Glass Button Success (Download) */
 .stDownloadButton > button {
-    background: rgba(167, 243, 208, 0.30) !important;
+    background: rgba(167, 243, 208, 0.22) !important;
     backdrop-filter: blur(16px) !important;
     -webkit-backdrop-filter: blur(16px) !important;
-    border: 1px solid rgba(110, 231, 183, 0.55) !important;
-    border-top: 1px solid rgba(255, 255, 255, 0.8) !important;
+    border: 1px solid rgba(110, 231, 183, 0.45) !important;
+    border-top: 1px solid rgba(255, 255, 255, 0.7) !important;
     border-radius: 16px !important;
     color: #064e3b !important;
     font-family: 'Courier Prime', 'Space Mono', monospace !important;
     font-weight: 700 !important;
     font-size: 13px !important;
-    padding: 12px 28px !important;
-    box-shadow: 0 6px 20px rgba(16, 185, 129, 0.15) !important;
+    padding: 14px 32px !important;
+    box-shadow: 0 4px 16px rgba(16, 185, 129, 0.1) !important;
     transition: all 0.25s ease !important;
 }
 
 .stDownloadButton > button:hover {
-    background: rgba(167, 243, 208, 0.45) !important;
+    background: rgba(167, 243, 208, 0.35) !important;
     transform: translateY(-2px) !important;
-    box-shadow: 0 10px 28px rgba(16, 185, 129, 0.22) !important;
+    box-shadow: 0 8px 24px rgba(16, 185, 129, 0.16) !important;
 }
 
-/* Dataframe Container */
+/* Expanders Glass */
+[data-testid="stExpander"] {
+    background: rgba(255, 255, 255, 0.08) !important;
+    backdrop-filter: blur(20px) !important;
+    -webkit-backdrop-filter: blur(20px) !important;
+    border: 1px solid rgba(255, 255, 255, 0.35) !important;
+    border-radius: 18px !important;
+    box-shadow: 0 8px 24px 0 rgba(31, 38, 135, 0.06) !important;
+    margin-bottom: 14px !important;
+}
+
+/* Dataframe Container Transparan */
 [data-testid="stDataFrame"] {
-    background: rgba(255, 255, 255, 0.15) !important;
+    background: rgba(255, 255, 255, 0.06) !important;
     backdrop-filter: blur(16px) !important;
-    border: 1px solid rgba(255, 255, 255, 0.4) !important;
-    border-radius: 16px !important;
-    padding: 10px !important;
-}
-
-/* Expanders */
-.streamlit-expanderHeader {
-    background: rgba(255, 255, 255, 0.12) !important;
     border: 1px solid rgba(255, 255, 255, 0.3) !important;
     border-radius: 14px !important;
-    font-weight: 700 !important;
-    color: #0f172a !important;
 }
 </style>
+
+<!-- Inject Ambient Blobs -->
+<div class="ambient-blob-1"></div>
+<div class="ambient-blob-2"></div>
+<div class="ambient-blob-3"></div>
 """
 
 st.markdown(CUSTOM_CSS, unsafe_allow_html=True)
 
-# Header Section
+# Header Card
 st.markdown("""
-<div class="glass-header-card">
+<div class="pure-glass-card" style="margin-bottom: 24px;">
     <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;">
         <div>
-            <div class="glass-badge">
+            <div style="display: inline-flex; align-items: center; gap: 8px; padding: 4px 12px; border-radius: 9999px; font-size: 11px; font-weight: 700; background: rgba(255, 255, 255, 0.2); border: 1px solid rgba(255, 255, 255, 0.4); color: #334155; margin-bottom: 8px;">
                 <span style="display:inline-block; width:8px; height:8px; border-radius:50%; background:#0284c7;"></span>
                 BPS Statistical System
             </div>
-            <h1 style="font-size: 24px; font-weight: 800; margin: 0 0 8px 0; color: #0f172a;">
+            <h1 style="font-size: 26px; font-weight: 800; margin: 0 0 6px 0; color: #0f172a; letter-spacing: -0.02em;">
                 BPS Statistical Multi-Table Selector &amp; Exporter
             </h1>
             <p style="font-size: 13px; color: #475569; margin: 0; max-width: 650px; line-height: 1.5;">
                 Saring data statistik wilayah bertingkat, pratinjau tabel pivot 2D, dan ekspor ke lembar kerja Excel gabungan.
             </p>
         </div>
-        <div style="background: rgba(255,255,255,0.2); padding: 10px 18px; border-radius: 16px; border: 1px solid rgba(255,255,255,0.4); text-align: right;">
+        <div class="pure-glass-card" style="padding: 10px 18px; border-radius: 16px; text-align: right;">
             <div style="font-size: 11px; color: #64748b; font-weight: 500;">Database Engine</div>
             <div style="font-size: 13px; color: #0f172a; font-weight: 700;">DuckDB Parquet</div>
         </div>
@@ -208,15 +257,13 @@ def get_db():
 
 con = get_db()
 
-# Filter Columns Layout
+# Filter Section Layout
 col1, col2 = st.columns(2)
 
 with col1:
     st.markdown("""
-    <div class="glass-section-card">
-        <div style="font-size: 13px; font-weight: 700; color: #0f172a; margin-bottom: 12px; border-bottom: 1px solid rgba(255,255,255,0.3); padding-bottom: 8px;">
-            Filter Wilayah Administrasi (Hirarki Bertingkat)
-        </div>
+    <div class="pure-glass-card" style="padding: 14px 18px; margin-bottom: 12px;">
+        <span style="font-size: 13px; font-weight: 700; color: #0f172a;">Filter Wilayah Administrasi (Hirarki Bertingkat)</span>
     </div>
     """, unsafe_allow_html=True)
 
@@ -244,10 +291,8 @@ with col1:
 
 with col2:
     st.markdown("""
-    <div class="glass-section-card">
-        <div style="font-size: 13px; font-weight: 700; color: #0f172a; margin-bottom: 12px; border-bottom: 1px solid rgba(255,255,255,0.3); padding-bottom: 8px;">
-            Filter Periode &amp; Judul Tabel (Parameter Data)
-        </div>
+    <div class="pure-glass-card" style="padding: 14px 18px; margin-bottom: 12px;">
+        <span style="font-size: 13px; font-weight: 700; color: #0f172a;">Filter Periode &amp; Judul Tabel (Parameter Data)</span>
     </div>
     """, unsafe_allow_html=True)
 
@@ -283,9 +328,9 @@ with col2:
     tbl_all = [r[0] for r in con.execute(tbl_query + " ORDER BY Judul_Tabel", params_tbl).fetchall()]
     sel_tabel = st.multiselect("5. Pilih Tabel (opsional, kosongkan untuk pilih semua)", tbl_all)
 
-st.markdown("<div style='height: 12px;'></div>", unsafe_allow_html=True)
+st.markdown("<div style='height: 18px;'></div>", unsafe_allow_html=True)
 
-# Trigger Action Button
+# Trigger Button
 col_btn_center = st.columns([1, 2, 1])
 with col_btn_center[1]:
     execute_btn = st.button("Tampilkan & Siapkan File Excel", use_container_width=True)
@@ -324,7 +369,7 @@ if execute_btn:
         total_tables = len(table_groups)
 
         st.markdown(f"""
-        <div class="glass-section-card" style="border-color: rgba(16, 185, 129, 0.4); display: flex; justify-content: space-between; align-items: center;">
+        <div class="pure-glass-card" style="border-color: rgba(16, 185, 129, 0.4); display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
             <div style="font-weight: 700; color: #064e3b; font-size: 13px;">
                 Ditemukan <strong>{total_tables} tabel unik</strong> dari kombinasi filter yang dipilih.
             </div>
